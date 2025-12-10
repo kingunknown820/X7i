@@ -1,56 +1,83 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
+
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>X7i - Login</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-<style>
-body { background:black; font-family:'Poppins',sans-serif; color:#fff; display:flex; justify-content:center; align-items:center; min-height:100vh; }
-.container { background: rgba(43,48,226,0.05); border:1px solid rgba(43,66,226,0.2); padding:40px 30px; border-radius:20px; max-width:450px; width:90%; }
-.form-group { position:relative; margin-bottom:20px; }
-.form-group i { position:absolute; left:15px; top:50%; transform:translateY(-50%); color:#2B51E2; }
-.form-control { width:100%; padding:14px 14px 14px 45px; border-radius:10px; border:1px solid rgba(49,43,226,0.3); background: rgba(60,43,226,0.1); color:white; }
-.btn-login { width:100%; padding:14px; border:none; border-radius:10px; background:linear-gradient(135deg,#352BE2,#0A0082); color:white; font-weight:600; cursor:pointer; margin-top:10px;}
-.btn-login:hover { background:#2118D7; }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>X7i - Login</title>
+
+  <!-- Google Font & Icon -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link rel="icon" href="https://files.catbox.moe/nv8rrj.jpg" type="image/png">
+
+  <style>
+    * { box-sizing: border-box; margin:0; padding:0; }
+    body { background: black; font-family: 'Poppins', sans-serif; color: #283EE7; min-height:100vh; display:flex; align-items:center; justify-content:center; position: relative; overflow:hidden; }
+    .login-container { position: relative; z-index: 2; background: rgba(43, 48, 226, 0.05); border:1px solid rgba(43,66,226,0.2); backdrop-filter: blur(8px); padding:40px 30px; border-radius:20px; max-width:450px; width:90%; box-shadow:0 0 25px rgba(60,43,230,0.3);}
+    .logo-container { text-align:center; margin-bottom:20px; }
+    .logo { width:100px; filter: drop-shadow(0 0 30px #2B30E2); margin-bottom:20px; }
+    .title { font-size:32px; color:#1B47F1; text-shadow:0 0 10px #0917D7; font-weight:800; letter-spacing:1px; }
+    .subtitle { font-size:14px; color:#B3C0FF; margin-bottom:30px; }
+    .form-group { position:relative; margin-bottom:20px; }
+    .form-group i { position:absolute; left:15px; top:50%; transform:translateY(-50%); color:#2B51E2; font-size:16px; }
+    .form-control { width:100%; padding:14px 14px 14px 45px; border-radius:10px; border:none; background: rgba(60,43,226,0.1); color:white; font-size:14px; border:1px solid rgba(49,43,226,0.3);}
+    .form-control:focus { outline:none; border-color:#1C2DE8; box-shadow:0 0 10px rgba(46,43,226,0.3);}
+    .form-control::placeholder { color:#192FE2; }
+    .btn-login { width:100%; padding:14px; font-size:16px; background: linear-gradient(135deg, #352BE2, #0A0082); color:white; font-weight:600; border:none; border-radius:10px; cursor:pointer; margin-top:10px;}
+    .btn-login:hover { background:#2118D7; transform:translateY(-2px); box-shadow:0 8px 16px rgba(43,59,226,0.4);}
+  </style>
 </head>
+
 <body>
-<div class="container">
-  <h2 style="text-align:center;color:#ff8cff;">LOGIN X7i</h2>
-  <form id="loginForm">
-    <div class="form-group">
-      <i class="fas fa-user"></i>
-      <input type="text" id="username" class="form-control" placeholder="Username" required>
+  <div class="login-container">
+    <div class="logo-container">
+      <img src="https://files.catbox.moe/nv8rrj.jpg" alt="ZETROZZ Logo" class="logo">
+      <div class="title">X7i - System</div>
+      <div class="subtitle">Wellcome To Website X7i</div>
     </div>
-    <div class="form-group">
-      <i class="fas fa-key"></i>
-      <input type="password" id="password" class="form-control" placeholder="Password" required>
-    </div>
-    <button type="submit" class="btn-login"><i class="fas fa-lock"></i> LOGIN</button>
-  </form>
-</div>
 
-<script>
-document.getElementById("loginForm").addEventListener("submit", function(e){
-  e.preventDefault();
-  const username = document.getElementById("username").value;
-  const password = document.getElementById("password").value;
+    <form method="POST" action="/auth" id="loginForm">
+      <div class="form-group">
+        <i class="fas fa-user"></i>
+        <input type="text" name="username" class="form-control" placeholder="Username" required />
+      </div>
+      <div class="form-group">
+        <i class="fas fa-key"></i>
+        <input type="password" name="password" class="form-control" placeholder="Password" required />
+      </div>
+      <button type="submit" class="btn-login">
+        <i class="fas fa-lock"></i> LOGIN NOW
+      </button>
+    </form>
+  </div>
 
-  fetch('users.json')
-    .then(res => res.json())
-    .then(users => {
-      const user = users.find(u => u.username === username && u.password === password);
-      if(user){
-        // Login berhasil, arahkan ke form unban
-        window.location.href = "unban.html";
-      } else {
-        alert("Username atau password salah!");
-      }
-    })
-    .catch(err => console.error(err));
-});
-</script>
+  <script>
+    // Login menggunakan users.json
+    const loginForm = document.getElementById('loginForm');
+
+    loginForm.addEventListener('submit', function(e){
+      e.preventDefault(); // cegah submit default
+
+      const username = this.username.value;
+      const password = this.password.value;
+
+      fetch('users.json')
+        .then(res => res.json())
+        .then(users => {
+          const user = users.find(u => u.username === username && u.password === password);
+          if(user){
+            // Login berhasil, arahkan ke form unban
+            window.location.href = "unban.html";
+          } else {
+            alert("Username atau password salah!");
+          }
+        })
+        .catch(err => {
+          console.error(err);
+          alert("Gagal memuat users.json");
+        });
+    });
+  </script>
 </body>
 </html>
