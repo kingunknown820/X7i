@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Form Unban WhatsApp</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #0b0015;
+      color: #fff;
+    }
+
+    .container {
+      max-width: 480px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 18px;
+      padding: 25px;
+      box-shadow: 0 0 20px rgba(150, 0, 255, 0.4);
+    }
+
+    .title {
+      font-size: 32px;
+      font-weight: 700;
+      text-align: center;
+      margin-top: 0;
+      color: #ff8cff;
+      text-shadow: 0 0 20px #ff00f7;
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 16px;
+      color: #e8d8ff;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin: 14px 0 5px;
+      font-size: 14px;
+      color: #e8d8ff;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      background: rgba(0, 0, 0, 0.4);
+      color: #fff;
+      font-size: 15px;
+      outline: none;
+      transition: .2s;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: #d56bff;
+      box-shadow: 0 0 10px #c000ff;
+    }
+
+    .btn {
+      width: 48%;
+      padding: 12px;
+      border-radius: 12px;
+      border: none;
+      font-size: 15px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: .2s;
+    }
+
+    .btn-send {
+      background: linear-gradient(135deg, #ff73f8, #b85cff);
+      color: #1a001f;
+      box-shadow: 0 0 15px #ff4df5;
+    }
+
+    .btn-clear {
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+    }
+
+    .btn-send:hover { transform: scale(1.03); }
+    .btn-clear:hover { transform: scale(1.03); }
+
+    .btn-group {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 25px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="card">
+
+      <h1 class="title">UNBAN WHATSAPP</h1>
+      <p class="subtitle">Isi form di bawah untuk mengajukan permintaan unban akun WhatsApp Anda</p>
+
+      <label>Nama Lengkap Anda</label>
+      <input id="nama" placeholder="Masukkan nama lengkap anda">
+
+      <label>Nomor WhatsApp (yang akan dipulihkan)</label>
+      <input id="nomor" placeholder="+60xxxxxxxxx">
+
+      <label>Nomor yang kena ban</label>
+      <input id="nomorBan" placeholder="+60xxxxxxxxx">
+
+      <label>Pilih Opsi Banding</label>
+      <select id="opsi">
+        <option value="Permanent">Permanen</option>
+        <option value="Spam">Spam</option>
+      </select>
+
+      <label>Ceritakan apa yang berlaku</label>
+      <textarea id="cerita" rows="4" placeholder="Tulis keterangan…"></textarea>
+
+      <div class="btn-group">
+        <button class="btn btn-send" onclick="kirim()">Kirim Permintaan Unban</button>
+        <button class="btn btn-clear" onclick="resetForm()">Bersihkan</button>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    function resetForm() {
+      document.querySelectorAll("input, textarea").forEach(e => e.value = "");
+      document.getElementById("opsi").value = "Permanent";
+    }
+
+    function kirim() {
+      let nama = document.getElementById("nama").value;
+      let nomor = document.getElementById("nomor").value;
+      let nomorBan = document.getElementById("nomorBan").value;
+      let opsi = document.getElementById("opsi").value;
+      let cerita = document.getElementById("cerita").value;
+
+      if(opsi === "Spam") {
+        // Buka email client dengan email siap dikirim
+        let subject = encodeURIComponent("Permohonan Unban Akun WhatsApp");
+        let body = encodeURIComponent(
+`Kepada Tim Support WhatsApp,
+
+Nama saya ${nama}, dan saya ingin mengajukan permohonan unban untuk akun WhatsApp saya dengan nomor: ${nomor}.
+
+Akun saya baru-baru ini diblokir karena ${opsi}. Saya yakin ini terjadi karena ${cerita}.
+
+Saya memohon agar akun saya dapat dipulihkan, karena akun ini sangat penting bagi komunikasi pribadi dan pekerjaan saya. Saya berjanji untuk mematuhi semua kebijakan dan panduan penggunaan WhatsApp di masa mendatang.
+
+Terima kasih atas perhatian dan bantuan Anda.
+
+Hormat saya,
+${nama}
+${nomor}`
+        );
+
+        window.location.href = `mailto:support@support.whatsapp.com?subject=${subject}&body=${body}`;
+      } else {
+        // Untuk opsi selain Spam, hanya tampilkan data di console
+        let data = {
+          nama: nama,
+          nomor: nomor,
+          nomor_ban: nomorBan,
+          opsi: opsi,
+          cerita: cerita
+        };
+        console.log("DATA DIHANTAR:", data);
+        alert("Data siap. Sambungkan fungsi ini ke API Gmail atau WhatsApp Support.");
+      }
+    }
+  </script>
+
+</body>
+</html>
