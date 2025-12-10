@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Form Unban WhatsApp</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+body { background:black; font-family:'Poppins',sans-serif; color:#fff; display:flex; justify-content:center; align-items:center; min-height:100vh; }
+.container { background: rgba(43,48,226,0.05); border:1px solid rgba(43,66,226,0.2); padding:40px 30px; border-radius:20px; max-width:450px; width:90%; }
+input, select { width:100%; padding:12px; border-radius:12px; border:1px solid rgba(255,255,255,0.3); background:rgba(0,0,0,0.4); color:#fff; margin-bottom:15px; }
+.btn-send { width:100%; padding:14px; border:none; border-radius:10px; background:linear-gradient(135deg,#ff73f8,#b85cff); color:#1a001f; font-weight:600; cursor:pointer;}
+.btn-send:hover { transform:scale(1.03); }
+</style>
+</head>
+<body>
+<div class="container">
+  <h2 style="text-align:center;color:#ff8cff;">UNBAN WHATSAPP</h2>
+  <label>Nama Lengkap Anda</label>
+  <input id="nama" placeholder="Masukkan nama lengkap Anda">
+  <label>Nomor WhatsApp</label>
+  <input id="nomor" placeholder="+60xxxxxxxxx">
+  <label>Pilih Opsi Banding</label>
+  <select id="opsi">
+    <option value="Permanent">Permanen</option>
+    <option value="Spam">Spam</option>
+  </select>
+  <button class="btn-send" onclick="kirim()">Kirim Permintaan Unban</button>
+</div>
+
+<script>
+function kirim(){
+  const nama = document.getElementById("nama").value;
+  const nomor = document.getElementById("nomor").value;
+  const opsi = document.getElementById("opsi").value;
+
+  if(!nama || !nomor){ alert("Isi semua field!"); return; }
+
+  let subject = encodeURIComponent("Permohonan Unban Akun WhatsApp");
+  let body = "";
+
+  if(opsi === "Permanent"){
+    body = `Halo Tim WhatsApp,
+
+Saya ingin mengajukan banding atas pemblokiran permanen terhadap akun WhatsApp saya dengan nomor: ${nomor}.
+Saya yakin pemblokiran ini terjadi karena kesalahpahaman atau sistem yang salah mendeteksi aktivitas akun saya.
+
+Saya menggunakan akun ini hanya untuk berkomunikasi dengan keluarga, teman, dan keperluan pribadi/bisnis kecil.
+Saya selalu berusaha mengikuti Ketentuan Layanan dan Kebijakan WhatsApp.
+
+Mohon untuk meninjau kembali kasus saya dan mempertimbangkan untuk mengaktifkan kembali akun tersebut.
+
+Hormat saya,
+${nama}
+Nomor WhatsApp: ${nomor}`;
+  }else{
+    body = `Kepada Tim Support WhatsApp,
+
+Nama saya ${nama}, dan saya ingin mengajukan permohonan unban untuk akun WhatsApp saya.
+Nomor WhatsApp: ${nomor}
+
+Akun saya baru-baru ini diblokir karena Spam.
+Saya memohon agar akun saya dapat dipulihkan, karena akun ini sangat penting bagi komunikasi pribadi dan pekerjaan saya.
+
+Terima kasih atas perhatian dan bantuan Anda.
+
+Hormat saya,
+${nama}
+${nomor}`;
+  }
+
+  window.location.href = `mailto:support@support.whatsapp.com?subject=${subject}&body=${encodeURIComponent(body)}`;
+}
+</script>
+</body>
+</html>
